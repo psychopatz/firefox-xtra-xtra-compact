@@ -20,7 +20,7 @@
 
 	/* Define color scheme variables */
     --accent-color: 20, 20, 20;
-    --secondary-accent-color: 137, 60, 245;
+    --secondary-accent-color: 1, 60, 245;
     --third-accent-color: 167, 82, 223;
     --light-color: 40, 40, 40;
     --dark-color: 20, 20, 20;
@@ -177,10 +177,12 @@ toolbarbutton#alltabs-button {
 /* When hovering over the navigator toolbox, the bookmarks toolbar slides down */
 #navigator-toolbox:hover #PersonalToolbar {
 	max-height: 50px !important;
+  
 }
 
 /* By default, keep the bookmarks toolbar collapsed (hidden) */
 #navigator-toolbox #PersonalToolbar {
+  padding: 4px !important;
 	min-height: 0 !important;
 	max-height: 0 !important;
 	overflow: hidden !important;
@@ -237,14 +239,9 @@ tab[selected="true"] .tab-background {
 
 
 /* ============================================================================
-   SUPPORT FOR FF-PROTON DARK THEME & COMPACT UI MODE
+ COMPACT UI MODE
    ============================================================================ */
 
-/* Remove default tab curves and borders */
-.tab-container {
-  --tab-curve-width: 30px;
-  --tabs-border: transparent !important;
-}
 
 /* Make tab backgrounds transparent and adjust margins */
 .tab-background {
@@ -349,7 +346,7 @@ tab[selected="true"] .tab-background {
 #urlbar {
     border-radius: 16px !important;
     /* A semi-transparent dark background (adjust the alpha value as desired) */
-    background-color: rgba(28, 27, 34, 0.2) !important;
+    background-color: rgba(28, 27, 34, 0.9) !important;
     border: transparent !important;
 
     /* A semi-transparent gradient overlay: each color stop has its own alpha value */
@@ -392,15 +389,6 @@ tab[selected="true"] .tab-background {
   background-color: rgba(43, 42, 51, 0.85) !important;
 }
 
-/* Hide the bookmark star button by default, show on hover/focus/open */
-#star-button-box {
-  display: none !important;
-}
-#urlbar:hover #star-button-box,
-#urlbar[focused=true] #star-button-box,
-#urlbar[open=true] #star-button-box {
-  display: -moz-box !important;
-}
 
 /* Tooltip styling for the URL bar - dark with gradient border */
 tooltip {
