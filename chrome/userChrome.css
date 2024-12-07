@@ -1,112 +1,80 @@
+/* ============================================================================
+   IMPORTS
+   ============================================================================ */
+
 /* 
-	Uncomment if you want custom window button icons.
-	This is added just to match my system theme.
- */
-@import url("./window-buttons.css");
+   Uncomment if you want custom window button icons.
+   This file should contain custom styling for the window 
+   minimize, maximize, and close buttons.
+*/
+/* @import url("./window-buttons.css"); */
 
-:root {
-	/* enforce Compact density to custom height */
+
+/* ============================================================================
+   GLOBAL VARIABLES & CUSTOM PROPERTIES
+   ============================================================================ */
+
+   :root {
+	/* Enforce Compact density (tab height) */
 	--tab-min-height: 24 !important;
+
+	/* Define color scheme variables */
+    --accent-color: 20, 20, 20;
+    --secondary-accent-color: 137, 60, 245;
+    --third-accent-color: 167, 82, 223;
+    --light-color: 40, 40, 40;
+    --dark-color: 20, 20, 20;
+    --caption-close-color: 136, 81, 168;
+    --caption-min-color: 74, 45, 116;
+    --caption-max-color: 94, 17, 174;
+    --url-bg-color: 20, 20, 20;
+    --active-tab-color: 28, 28, 28;
 }
 
-/* Remove top and bottom spaces on tabs, 
-causing additional height on title bar. */
-.tab-background {
-	margin-block: 0 !important;
+
+/* ============================================================================
+   DARK MODE SUPPORT
+   ============================================================================ */
+
+/* When using a dark lightweight theme (LWT) */
+:root:-moz-lwtheme-brighttext,
+.sidebar-panel[lwt-sidebar-brighttext],
+body[lwt-sidebar-brighttext] {
+    --main-bgcolor: var(--dark-color);
+    --transparent-bgcolor: var(--accent-color);
 }
 
-/* Remove space gaps on in between tabs and left
-and right edges. */
-.tabbrowser-tab {
-	padding: 0 !important;
+
+/* ============================================================================
+   WINDOW & TOOLBAR ADJUSTMENTS
+   ============================================================================ */
+
+/* Remove default borders around navigator toolbox (top area of Firefox UI) */
+toolbox#navigator-toolbox {
+    border: 0 !important;
 }
 
-/* Remove pre-define height on tabs content. */
-html#main-window
-	body
-	toolbox#navigator-toolbox
-	vbox#titlebar
-	toolbar#TabsToolbar.browser-toolbar.titlebar-color
-	hbox.toolbar-items
-	hbox#TabsToolbar-customization-target.customization-target
-	tabs#tabbrowser-tabs
-	arrowscrollbox#tabbrowser-arrowscrollbox
-	tab.tabbrowser-tab
-	stack.tab-stack
-	hbox.tab-content
-	vbox.tab-label-container {
-	height: auto !important;
-	overflow-x: hidden;
-	overflow-y: visible;
-}
-
-/* Remove pre tabs spacer. */
-hbox.titlebar-spacer[type="pre-tabs"] {
-	display: none !important;
-}
-
-/* Decrease padding on tabs. */
-hbox.tab-content {
-	padding-inline: 4px !important;
-}
-
-/* Redesigned the new tab button. */
-toolbarbutton#tabs-newtab-button {
-	margin-inline: 3px !important;
-	border-radius: 4px !important;
-	padding: 0 !important;
-}
-
-/* Add background color to the new tab button,
-instead on the icon when hover. */
-toolbarbutton#tabs-newtab-button:hover {
-	background-color: var(--panel-banner-item-hover-bgcolor) !important;
-}
-toolbarbutton#tabs-newtab-button > image {
-	padding: 3px !important;
-}
-toolbarbutton#tabs-newtab-button > image :hover {
-	background: none !important;
-}
-
-/* Height left and rigth scroll arrows that 
-	appears when there are too many tabs. */
-toolbarbutton#scrollbutton-down,
-toolbarbutton#scrollbutton-up {
-	display: none !important;
-}
-
-/* Remove the dropdown button that appears when 
-there are also too many tabs. */
-toolbarbutton#alltabs-button {
-	display: none !important;
-}
-
-/* Match the tab opacity when window is inactive. */
+/* Remove gap between title bar and toolbar, also adjust inactive opacity */
 toolbar#nav-bar {
 	will-change: auto;
 	transition: opacity var(--inactive-window-transition);
 	border-top: none !important;
 }
+
 toolbar#nav-bar:-moz-window-inactive {
 	opacity: var(--inactive-titlebar-opacity);
 }
 
-/* Remove gap between title bar and toolbar. */
 toolbar#nav-bar:not([tabs-hidden="true"]) {
 	box-shadow: none !important;
 }
 
-/* Removed bottom border radius on tabs. */
-tab.tabbrowser-tab > stack.tab-stack > vbox.tab-background {
-	border-bottom-left-radius: 0 !important;
-	border-bottom-right-radius: 0 !important;
-}
-
-/* Decrease toolbar height  */
+/* Decrease toolbar height */
 toolbar#nav-bar {
 	max-height: 26px !important;
 }
+
+/* Adjust URL bar height to maintain compact UI */
 hbox#urlbar {
 	min-height: 22px !important;
 }
@@ -114,15 +82,336 @@ hbox#urlbar:not([focused="true"]) {
 	max-height: 22px !important;
 }
 
-/* Autohide Bookmark part */
 
-#navigator-toolbox:hover #PersonalToolbar{
-max-height: 50px !important;
+/* ============================================================================
+   TAB BAR & TAB STYLING
+   ============================================================================ */
+
+/* Remove extra vertical margins on tabs */
+.tab-background {
+	margin-block: 0 !important;
 }
 
-#navigator-toolbox #PersonalToolbar{
-min-height: 0 !important;
-max-height: 0 !important;
-overflow: hidden !important;
-transition: all .2s ease-in-out;
-} 
+/* Remove spacing between tabs and window edges */
+.tabbrowser-tab {
+	padding: 0 !important;
+}
+
+/* Allow tabs' contents to auto-fit height instead of a fixed height */
+html#main-window body toolbox#navigator-toolbox vbox#titlebar 
+toolbar#TabsToolbar.browser-toolbar.titlebar-color hbox.toolbar-items 
+hbox#TabsToolbar-customization-target.customization-target tabs#tabbrowser-tabs 
+arrowscrollbox#tabbrowser-arrowscrollbox tab.tabbrowser-tab stack.tab-stack 
+hbox.tab-content vbox.tab-label-container {
+	height: auto !important;
+	overflow-x: hidden;
+	overflow-y: visible;
+}
+
+/* Remove the spacer before tabs to bring them closer to the left edge */
+hbox.titlebar-spacer[type="pre-tabs"] {
+	display: none !important;
+}
+
+/* Slightly reduce horizontal padding inside tab content */
+hbox.tab-content {
+	padding-inline: 4px !important;
+}
+
+/* Rounded corners and styling for tabs */
+tab.tabbrowser-tab > stack.tab-stack > vbox.tab-background {
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+}
+
+/* Add a red line to the selected tab for better visibility */
+.tab-line[selected="true"] {
+    background-color: red !important;
+    height: 2px !important;
+}
+
+
+/* ============================================================================
+   NEW TAB BUTTON STYLING
+   ============================================================================ */
+
+/* Redesign the new tab button to be smaller and rounded */
+/* toolbarbutton#tabs-newtab-button {
+	margin-inline: 3px !important;
+	border-radius: 4px !important;
+	padding: 0 !important;
+} */
+
+/* Add a hover background to the new tab button */
+/* toolbarbutton#tabs-newtab-button:hover {
+	background-color: var(--panel-banner-item-hover-bgcolor) !important;
+}
+toolbarbutton#tabs-newtab-button > image {
+	padding: 3px !important;
+}
+toolbarbutton#tabs-newtab-button > image:hover {
+	background: none !important;
+} */
+
+
+/* ============================================================================
+   TAB SCROLLING & DROPDOWN BUTTONS
+   ============================================================================ */
+
+/* Hide scroll arrows that appear when too many tabs are open */
+toolbarbutton#scrollbutton-down,
+toolbarbutton#scrollbutton-up {
+	display: none !important;
+}
+
+/* Hide the all-tabs dropdown button that appears with many tabs */
+toolbarbutton#alltabs-button {
+	display: none !important;
+}
+
+
+/* ============================================================================
+   BOOKMARKS BAR AUTOHIDE
+   ============================================================================ */
+
+/* When hovering over the navigator toolbox, the bookmarks toolbar slides down */
+#navigator-toolbox:hover #PersonalToolbar {
+	max-height: 50px !important;
+}
+
+/* By default, keep the bookmarks toolbar collapsed (hidden) */
+#navigator-toolbox #PersonalToolbar {
+	min-height: 0 !important;
+	max-height: 0 !important;
+	overflow: hidden !important;
+	transition: all .2s ease-in-out;
+}
+
+
+/* ============================================================================
+   GENERAL TAB COLOR SCHEME & SELECTED TAB LINE
+   ============================================================================ */
+
+/* Tab text color adjustments for normal and selected states */
+.tabbrowser-tab:not([visuallyselected="true"]),
+.tabbrowser-tab:-moz-lwtheme {
+    color: rgba(var(--secondary-accent-color), 1) !important;
+}
+
+tab[selected="true"] .tab-content {
+    color: rgba(var(--secondary-accent-color), 1) !important;
+}
+
+tab[selected="true"] .tab-background {
+    background: rgba(var(--light-color), 1) !important;
+}
+
+/* Tab hover effects for background and outlines */
+.tabbrowser-tab::after,
+.tabbrowser-tab::before {
+    border-left: 1px solid transparent !important;
+    opacity: 1 !important;
+}
+
+/* Close button on tabs: hover effect & rounding */
+.tab-close-button {
+    transition: all 0.3s ease !important;
+    border-radius: 7px !important;
+}
+.tab-close-button:hover {
+    fill-opacity: 1 !important;
+}
+
+/* Rounded corners for tab backgrounds */
+.tabbrowser-tab > .tab-stack > .tab-background {
+    border-radius: 7px !important;
+}
+
+/* Transition effect when hovering over non-selected tabs */
+.tabbrowser-tab > .tab-stack > .tab-background:not([selected="true"]) {
+    transition: all 0.3s ease !important;
+}
+.tabbrowser-tab:hover > .tab-stack > .tab-background:not([selected="true"]) {
+    background-color: rgba(var(--light-color), 0.7) !important;
+}
+
+
+/* ============================================================================
+   SUPPORT FOR FF-PROTON DARK THEME & COMPACT UI MODE
+   ============================================================================ */
+
+/* Remove default tab curves and borders */
+.tab-container {
+  --tab-curve-width: 30px;
+  --tabs-border: transparent !important;
+}
+
+/* Make tab backgrounds transparent and adjust margins */
+.tab-background {
+  background-image: none !important;
+  background-color: transparent !important;
+  -moz-margin-end: -15px !important;
+  -moz-margin-start: -15px !important;
+  -moz-box-orient: horizontal !important;
+}
+
+/* Remove borders on selected tab backgrounds */
+.tab-background[selected="true"] {
+  border: none !important;
+}
+
+/* Hover effect for non-selected tabs */
+.tabbrowser-tab:hover > .tab-stack > .tab-background:not([selected=true]) {
+  background-color: rgba(255,255,255,.1) !important;
+}
+
+/* Custom curved edges for selected tabs (using pseudo-elements) */
+.tab-background[selected="true"]::before,
+.tab-background[selected="true"]::after {
+  content: "" !important;
+  width: 30px !important;
+  min-height: 30px !important;
+  display: -moz-box !important;
+  background-repeat: no-repeat !important;
+  border: none !important;
+}
+
+/* Hover curves for non-selected tabs */
+.tabbrowser-tab:hover > .tab-stack > .tab-background:not([selected=true])::before,
+.tabbrowser-tab:hover > .tab-stack > .tab-background:not([selected=true])::after {
+  content: "" !important;
+  width: 30px !important;
+  max-height: 30px !important;
+  display: -moz-box !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Context line inside tabs for gradient borders or emphasis */
+.tab-background > .tab-context-line {
+  flex: 1;
+}
+
+/* Enhanced gradient border for selected tabs */
+.tab-background[selected="true"] > .tab-context-line {
+  border-top: 3px solid transparent !important;
+  border-image: 1 0 0 0 linear-gradient(
+    90deg, 
+    #9400FF, #ba00e5, #df06b9, 
+    #e62da7, #f13b95, #f64d86, 
+    #f85f7a, #fc7169, #f9845b, #e8ab52
+  ) !important;
+}
+
+/* Narrower width for pinned tabs */
+.tabbrowser-tab[pinned="true"] {
+  width: 40px !important;
+}
+
+/* Adjust new tab button width & margins */
+#tabs-newtab-button {
+  width: calc(36px + 30px) !important;
+  margin-inline-start: -15px !important;
+  margin-top: 0px !important;
+}
+
+/* Hover effect for close tab icon */
+.close-icon:hover {
+  border-radius: 60% !important;
+  fill: #FF0000 !important;
+  transition: fill 300ms cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+}
+
+/* Thicker selected tab line as an alternative visual cue */
+.tab-background[selected="true"] {
+  position: relative;
+}
+.tab-background[selected="true"]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg, 
+    #9400FF, #ba00e5, #df06b9, 
+    #e62da7, #f13b95, #f64d86, 
+    #f85f7a, #fc7169, #f9845b, #e8ab52
+  );
+}
+
+
+/* ============================================================================
+   URL BAR STYLING
+   ============================================================================ */
+
+/* Make the URL bar rounded, with a dark background and gradient border */
+#urlbar {
+    border-radius: 16px !important;
+    /* A semi-transparent dark background (adjust the alpha value as desired) */
+    background-color: rgba(28, 27, 34, 0.2) !important;
+    border: transparent !important;
+
+    /* A semi-transparent gradient overlay: each color stop has its own alpha value */
+    background-image: linear-gradient(
+        90deg, 
+        rgba(148, 0, 255, 0.3), 
+        rgba(186, 0, 229, 0.3), 
+        rgba(223, 6, 185, 0.3), 
+        rgba(230, 45, 167, 0.3), 
+        rgba(241, 59, 149, 0.3), 
+        rgba(246, 77, 134, 0.3), 
+        rgba(248, 95, 122, 0.3), 
+        rgba(252, 113, 105, 0.3), 
+        rgba(249, 132, 91, 0.3), 
+        rgba(232, 171, 82, 0.3)
+    ) !important;
+}
+
+/* 
+   If you’d prefer just a semi-transparent background without the gradient, 
+   remove the background-image and only use the background-color:
+   
+   #urlbar {
+       border-radius: 16px !important;
+       background-color: rgba(28, 27, 34, 0.7) !important;
+       border: transparent !important;
+       background-image: none !important;
+   }
+*/
+
+/* Inner background of the URL bar (for focus/hover states) */
+#urlbar-background {
+  border-radius: 16px !important;
+  margin: 2px !important;
+}
+
+/* Focused and open dropdown states of the URL bar with a subtle dark overlay */
+#urlbar[focused=true] #urlbar-background,
+#urlbar[open=true] #urlbar-background {
+  background-color: rgba(43, 42, 51, 0.85) !important;
+}
+
+/* Hide the bookmark star button by default, show on hover/focus/open */
+#star-button-box {
+  display: none !important;
+}
+#urlbar:hover #star-button-box,
+#urlbar[focused=true] #star-button-box,
+#urlbar[open=true] #star-button-box {
+  display: -moz-box !important;
+}
+
+/* Tooltip styling for the URL bar - dark with gradient border */
+tooltip {
+  -moz-appearance: none !important;
+  color: #fff !important;
+  background-color: #2B2A33 !important;
+  border: 1px solid transparent !important;
+  border-image: 1 1 1 1 linear-gradient(
+    90deg, 
+    #9400FF, #ba00e5, #df06b9, 
+    #e62da7, #f13b95, #f64d86, 
+    #f85f7a, #fc7169, #f9845b, #e8ab52
+  ) !important;
+}
