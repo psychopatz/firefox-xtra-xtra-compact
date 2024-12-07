@@ -113,3 +113,16 @@ hbox#urlbar {
 hbox#urlbar:not([focused="true"]) {
 	max-height: 22px !important;
 }
+
+/* Autohide Bookmark part */
+
+#navigator-toolbox:hover #PersonalToolbar{
+max-height: 50px !important;
+}
+
+#navigator-toolbox #PersonalToolbar{
+min-height: 0 !important;
+max-height: 0 !important;
+overflow: hidden !important;
+transition: all .2s ease-in-out;
+} 
